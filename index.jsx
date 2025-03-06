@@ -25,6 +25,8 @@ export default function App() {
   // Přidání produktu do košíku
   function addToCart(product) {
     const cartCount = cart.filter((item) => item.id === product.id).length;
+
+    
     if (cartCount < product.stock) {
       setCart([...cart, product]);
     }
@@ -34,6 +36,8 @@ export default function App() {
   function removeFromCart(product) {
     const newCart = [...cart];
     const index = newCart.findIndex((item) => item.id === product.id);
+
+    
     if (index !== -1) {
       newCart.splice(index, 1);
       setCart(newCart);
@@ -42,24 +46,34 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      
       <Text style={styles.title}>Bizar Shop</Text>
       
       
       <FlatList
         data={products}
+
+        
         keyExtractor={(item) => item.id}
         key={numColumns.toString()}
         numColumns={numColumns}
+
+        
         contentContainerStyle={styles.productList}
         renderItem={({ item }) => {
           const cartCount = cart.filter((cartItem) => cartItem.id === item.id).length;
           return (
             <View style={styles.productCard}>
               <Image source={item.image} style={styles.productImage} />
+
+
+              
               <Text style={styles.productName}>{item.name}</Text>
               <Text style={styles.productPrice}>{item.price}</Text>
+              
               <Text style={styles.productStock}>Skladem: {item.stock - cartCount}</Text>
               <TouchableOpacity 
+                
                 style={[styles.button, cartCount >= item.stock ? styles.buttonDisabled : null]} 
                 onPress={() => addToCart(item)}
                 disabled={cartCount >= item.stock}
@@ -73,16 +87,23 @@ export default function App() {
       
       
       <View style={styles.cartContainer}> 
+
+        
         <Text style={styles.cartTitle}>Košík ({cart.length})</Text>
         <ScrollView showsVerticalScrollIndicator={false}>
           {cart.map((item, index) => (
             <View key={index} style={styles.cartItemContainer}>
+
+              
               <Text style={styles.cartItem}>{item.name} - {item.price}</Text>
               <TouchableOpacity style={styles.removeButton} onPress={() => removeFromCart(item)}>
                 <Text style={styles.removeButtonText}>X</Text>
               </TouchableOpacity>
             </View>
           ))}
+
+
+          
         </ScrollView>
       </View>
     </View>
@@ -100,6 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
+    
     color: '#fff',
     marginBottom: 20,
   },
@@ -113,6 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     margin: 15,
     alignItems: 'center',
+    
     width: 350,
   },
   productImage: {
@@ -127,6 +150,7 @@ const styles = StyleSheet.create({
   },
   productPrice: {
     fontSize: 20,
+    
     color: '#ccc',
     marginBottom: 10,
   },
@@ -138,6 +162,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#ff6600',
     padding: 14,
+    
     borderRadius: 6,
     width: '100%',
     alignItems: 'center',
@@ -154,15 +179,18 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     minWidth: 320,
+    
     maxHeight: 400,
     position: 'absolute',
     right: 20,
+    
     top: 80,
   },
   cartTitle: {
     fontSize: 22,
     color: '#fff',
     marginBottom: 12,
+    
     textAlign: 'center',
   },
   cartItemContainer: {
@@ -170,17 +198,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
+    
   },
   cartItem: {
     fontSize: 18,
     color: '#fff',
+    
   },
   removeButton: {
     backgroundColor: 'red', 
     borderRadius: 6,
+    
     padding: 6,
     marginLeft: 10,
   },
+  
   removeButtonText: {
     color: '#fff',
     fontSize: 16,
